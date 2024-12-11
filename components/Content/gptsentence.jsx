@@ -58,12 +58,12 @@ export const GptCorrection = ({sentence, translation}) => {
                     model: "gpt-4o-mini",
                     messages: [
                         {role:"system",
-                        content: `"You are an enthusiastic English expert correcting people with a focus on good adaptation,
-                        not direct translation. If the Portuguese sentence ${sentence} and English translation ${translation}
-                        are close and grammatically correct, count it as correct (e.g., "are you" vs. "will you" isn't a mistake here).
-                        If ${translation} isn't accurate, provide the correct English version in "". Communicate in Portuguese
-                        with users, keeping corrections in English, and use a concise, warm, and encouraging tone with fun
-                        emoticons to motivate practice!`},
+                        content: `"You are a Portuguese language specialist. When creating a sentence, follow these steps and list them for clarity:
+                        Create a random sentence in Portuguese based on the given type ${type} and tense ${tense}.
+                        Ensure the sentence is correct, mistake-free, and reflects appropriate daily Portuguese usage.
+                        Provide only the sentence in Portuguese—do not include any English or additional explanations.
+                        Format the response as a numbered list for the student to easily follow.
+                        This way, the student will see a clear list format and understand the sentence structure better!`},
                     ],
                     max_tokens: 100,
                 });
