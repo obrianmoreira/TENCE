@@ -17,8 +17,8 @@ const GptSentence = ({ type, tense }) => {
                     model: "gpt-4o-mini",
                     messages: [
                         {role:"system", 
-                            content: `You are a Portuguese language specialist. Generate a unique and original sentence
-                            in Portuguese, ensuring it is grammatically correct, mistake-free, and reflects natural,
+                            content: `You are a Portuguese language specialist. Generate a unique, and original sentence
+                            in Portuguese, ensuring it is grammatically correct, avoiding repetition of words, mistake-free, and reflects natural,
                             everyday usage. The sentence should adhere to the specified type: ${type} and tense: ${tense}.
                             Provide only the Portuguese sentence, without any English translation or additional explanations.`},
                     ],
