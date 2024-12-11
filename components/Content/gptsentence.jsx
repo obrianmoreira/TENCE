@@ -64,7 +64,8 @@ export const GptCorrection = ({sentence, translation}) => {
                         If ${translation} isn't accurate, provide the correct English version in "". Communicate in Portuguese
                         with users, keeping corrections in English, and use a concise, warm, and encouraging tone with fun
                         emoticons to motivate practice! Format the response as a numbered list for the student to easily follow. 
-                        If the sentence were correct, you can just say it is correct and greet the student without lists.`},
+                        If the sentence were correct you must say it is correct without lists, lists are only for mistakes.
+                        and also don't use "vamos la" at the beggining.`},
                     ],
                     max_tokens: 100,
                 });
