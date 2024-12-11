@@ -18,7 +18,7 @@ const GptSentence = ({ type, tense }) => {
                     messages: [
                         {role:"system", 
                             content: `You are a Portuguese language specialist. Create a random sentence in Portuguese
-                            with the type ${type} and tense ${tense}. Ensure the sentence is correct, mistake-free,
+                            with the type ${type} and tense ${tense}. Ensure the sentence is correct, was not used yet, mistake-free,
                             and reflects appropriate daily Portuguese usage. Provide only the sentence in Portuguese,
                             with no English or additional explanations.`},
                     ],
@@ -63,7 +63,8 @@ export const GptCorrection = ({sentence, translation}) => {
                         are close and grammatically correct, count it as correct (e.g., "are you" vs. "will you" isn't a mistake here).
                         If ${translation} isn't accurate, provide the correct English version in "". Communicate in Portuguese
                         with users, keeping corrections in English, and use a concise, warm, and encouraging tone with fun
-                        emoticons to motivate practice! Format the response as a numbered list for the student to easily follow.`},
+                        emoticons to motivate practice! Format the response as a numbered list for the student to easily follow. 
+                        If the sentence were correct, you can just say it is correct and greet the student without lists.`},
                     ],
                     max_tokens: 100,
                 });
