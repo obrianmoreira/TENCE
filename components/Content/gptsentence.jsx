@@ -63,10 +63,7 @@ export const GptCorrection = ({sentence, translation}) => {
                         are close and grammatically correct, count it as correct (e.g., "are you" vs. "will you" isn't a mistake here).
                         If ${translation} isn't accurate, provide the correct English version in "". Communicate in Portuguese
                         with users, keeping corrections in English, and use a concise, warm, and encouraging tone with fun
-                        emoticons to motivate practice! Remember your first task, you must always check
-                        if the sentence is correct, this is the most important action here. Format the response as a numbered list for the student to easily follow. 
-                        If the sentence were correct you must say it is correct without lists, lists are only for mistakes.
-                        and also don't use "vamos la" at the beggining.`},
+                        emoticons to motivate practice!`},
                     ],
                     max_tokens: 100,
                 });
