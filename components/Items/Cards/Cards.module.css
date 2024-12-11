@@ -1,0 +1,9 @@
+.cardClass {
+    height: fit-content;
+    background-color: white;
+    color: #000000;
+    box-shadow: 0px 3px 4px 1px #b0b0b0;
+    border-radius: 10px;
+    border-style: solid;
+    padding: 20px;
+}   

@@ -1,0 +1,121 @@
+.h1Style {
+
+    font-size: 80px;
+    margin: 0px 0px 10px 0px;
+
+}
+
+.h2Style {
+
+    font-size: 80px;
+    margin: 0px 0px 0px 0px;
+    color: black;
+
+}
+
+.h3Style{
+    font-size: 35px;
+    color: black;
+}
+
+.h4Style{
+    font-size: 28px;
+    color: black;
+}
+
+.h5Style {
+    font-size: 16px;
+}
+
+.pStyle{
+    font-size: 16px;
+    margin: 15px 0px 20px 0px;
+    color: black;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 576px) {
+
+    .h1Style {
+
+        font-size: 40px;
+        margin: 0px 0px 10px 0px;
+    
+    }
+    
+    .h2Style {
+    
+        font-size: 40px;
+        margin: 0px 0px 0px 0px;
+    
+    }
+    
+    .h3Style{
+        font-size: 20px;
+        margin: 20px 0px 0px 0px;
+    }
+    
+    .h4Style{
+        font-size: 23px;
+    }
+    
+    .h5Style {
+        font-size: 16px;
+    }
+    
+    .pStyle{
+        font-size: 15px;
+        margin: 20px 0px 20px 0px;
+    }
+
+}
+
+@media only screen and (min-width: 577px) and (max-width: 992px) {
+
+    .h2Style {
+    
+        font-size: 60px;
+        margin: 0px 0px 0px 0px;
+    
+    }
+    
+    .h3Style{
+        font-size: 25px;
+        margin: 20px 0px 0px 0px;
+    }
+    
+    .h4Style{
+        font-size: 30px;
+    }
+    
+    .h5Style {
+        font-size: 16px;
+    }
+    
+    .pStyle{
+        font-size: 20px;
+        margin: 20px 0px 20px 0px;
+    }
+
+}
+
+@media only screen and (min-width: 993px) and (max-width: 1440px) {
+    
+    .h3Style{
+        font-size: 25px;
+        margin: 20px 0px 0px 0px;
+    }
+    
+    .h4Style{
+        font-size: 30px;
+    }
+    
+    .h5Style {
+        font-size: 16px;
+    }
+    
+    .pStyle{
+        font-size: 20px;
+        margin: 20px 0px 30px 0px;
+    }
+
+}
