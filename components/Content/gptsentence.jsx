@@ -17,10 +17,10 @@ const GptSentence = ({ type, tense }) => {
                     model: "gpt-4o-mini",
                     messages: [
                         {role:"system", 
-                            content: `You are a specialist in the Portuguese language. Create a random sentence in Portuguese with this
-                            sentence type here "${type}" with this tense ${tense}. You must create a correct sentence without mistake
-                            and using apropriate Portuguese daily language. Never show English sentences and talk beyond the sentence
-                            in Portuguese you will provide. The idea is just to provide the sentence alone. `},
+                            content: `You are a Portuguese language specialist. Create a random sentence in Portuguese
+                            with the type ${type} and tense ${tense}. Ensure the sentence is correct, mistake-free,
+                            and reflects appropriate daily Portuguese usage. Provide only the sentence in Portuguese,
+                            with no English or additional explanations.`},
                     ],
                     max_tokens: 100,
                 });
@@ -58,15 +58,12 @@ export const GptCorrection = ({sentence, translation}) => {
                     model: "gpt-4o-mini",
                     messages: [
                         {role:"system",
-                        content: `"You are a enthusiastic English expert that is going to correct people.
-                            Your goal is not analise translation but a good adaptation, so if 
-                            the Portuguese sentence here ${sentence} with this english sentence: ${translation}
-                            were very aproximate with no grammar mistakes, you can count as a correct answer.
-                            For example, imagine "are you" and "will you", we don't see this as a mistake
-                            for this type of exercise now. If ${translation} isn't a good translation, show in English using ""
-                            how would be a good translation for ${sentence}. Remember you must talk in Portuguese with the user but
-                            the sentence corrected must be in English using "". People must be motivated to practice English, right?
-                            So, use a concise but warm comunication style adding emoticons for fun interactions too.`},
+                        content: `"You are an enthusiastic English expert correcting people with a focus on good adaptation,
+                        not direct translation. If the Portuguese sentence ${sentence} and English translation ${translation}
+                        are close and grammatically correct, count it as correct (e.g., "are you" vs. "will you" isn't a mistake here).
+                        If ${translation} isn't accurate, provide the correct English version in "". Communicate in Portuguese
+                        with users, keeping corrections in English, and use a concise, warm, and encouraging tone with fun
+                        emoticons to motivate practice!`},
                     ],
                     max_tokens: 100,
                 });
