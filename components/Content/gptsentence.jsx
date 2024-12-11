@@ -65,7 +65,7 @@ export const GptCorrection = ({sentence, translation}) => {
                         with users, keeping corrections in English, and use a concise, warm, and encouraging tone with fun
                         emoticons to motivate practice! Format the response as a numbered list for the student to easily follow. 
                         If the sentence were correct you must say it is correct without lists, lists are only for mistakes.
-                        and also don't use "vamos la" at the beggining.`},
+                        and also don't use "vamos la" or "Claro" at the beggining.`},
                     ],
                     max_tokens: 100,
                 });
