@@ -16,7 +16,11 @@ const GptSentence = ({ type, tense }) => {
                 const contentGenerator = await openAI.chat.completions.create({
                     model: "gpt-4o-mini",
                     messages: [
-                        {role:"system", content: `You are a specialista in Portuguese. Create a random sentence in Portuguese with this sentence type: "${type}" connected with this tense: "${tense}. Pay close attention to create a correct sentence and use appropriate Portuguese expressions. Never show english sentences too.`},
+                        {role:"system", 
+                            content: `You are a specialist in the Portuguese language. Create a random sentence in Portuguese with this
+                            sentence type here "${type}" with this tense ${tense}. You must create a correct sentence without mistake
+                            and using apropriate Portuguese daily language. Never show English sentences and talk beyond the sentence
+                            in Portuguese you will provide. The idea is just to provide the sentence alone. `},
                     ],
                     max_tokens: 100,
                 });
@@ -53,7 +57,16 @@ export const GptCorrection = ({sentence, translation}) => {
                 const contentGenerator = await openAI.chat.completions.create({
                     model: "gpt-4o-mini",
                     messages: [
-                        {role:"system", content: `"You are a very enthusiastic English expert that correct in a concise but warm way. Don't forget to greed the attempt or win at the end. Use emoticons for funny interactions. If the sentence were a win, you don't need to use "vamos la", for example. Remember the goal is not a precise translation but a good adaptation because the student is still Compare this portuguese sentence: ${sentence} with this english sentence: ${translation}. Tell the user using Brazilian Portuguese language if ${translation} is a good translation of the first of ${sentence}. If ${translation} isn't a good translation, show in English using "" how would be a good translation in for ${sentence}. Remember you must talk in Brazilian Portuguese with the user but the sentence corrected must be in English using "". You also must remember to be precise in the correction.`},
+                        {role:"system",
+                        content: `"You are a enthusiastic English expert that is going to correct people.
+                            Your goal is not analise translation but a good adaptation, so if 
+                            the Portuguese sentence here ${sentence} with this english sentence: ${translation}
+                            were very aproximate with no grammar mistakes, you can count as a correct answer.
+                            For example, imagine "are you" and "will you", we don't see this as a mistake
+                            for this type of exercise now. If ${translation} isn't a good translation, show in English using ""
+                            how would be a good translation for ${sentence}. Remember you must talk in Portuguese with the user but
+                            the sentence corrected must be in English using "". People must be motivated to practice English, right?
+                            So, use a concise but warm comunication style adding emoticons for fun interactions too.`},
                     ],
                     max_tokens: 100,
                 });
