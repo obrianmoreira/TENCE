@@ -102,9 +102,6 @@ const Form = (props) => {
         setButtonGptAgain(englishInput)
         setBlockResetButton(true);
         setEnglishLastVersion(englishInput);
-        if (blockButton === false) {
-            alert('Você precisa apertar o botão "Reiniciar" para nossa AI criar uma nova frase.')
-        }
     }
 
 
