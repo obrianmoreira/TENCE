@@ -33,9 +33,11 @@ export const H2Text = (props) => {
     return (
         <>
         
-            <h2 id={props.h2Style} className={Style.h2Style}>
-                {props.h2Text}
-            </h2>
+            <div id={props.h2Div}>
+                <h2 id={props.h2Style} className={Style.h2Style}>
+                    {props.h2Text}
+                </h2>
+            </div>
         
         </>
     )
@@ -104,7 +106,7 @@ export const PText = (props) => {
     return (
         <>
         
-            <p id={props.pStyle} className={Style.pStyle}>
+            <p id={props.pStyle} className={Style.pStyle} style={props.style}>
                 {props.pText}
             </p>
         

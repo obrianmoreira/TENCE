@@ -44,6 +44,19 @@ const Form = (props) => {
     const [blockButton, setBlockButton] = useState(true);
     const [blockResetButton, setBlockResetButton] = useState(true);
 
+    // Filter Menu Boolean
+    const [showFilterMenu, setShowFilterMenu] = useState(false);
+
+    //
+    const [englishLastVersion, setEnglishLastVersion] = useState('');
+
+    //
+    const [loading, setLoading] = useState(true);
+
+    //
+    const [mainText, setMainText] = useState('Defina a frase que quer treinar no botão')
+    
+
     // When clicked it gets the data of the li placeholder and make it the data of the auxiliary input
     const handleAux = (auxInput) => {
         setAuxInput(auxInput)
@@ -58,15 +71,29 @@ const Form = (props) => {
     const handleTense = (tenseInput) => {
         setTenseInput(tenseInput)
         setTenseOptions(!showTenseOptions)
+        setLoading(true);
+        setMainText("loading...")
+    }
+
+    const handleSubFilters = (data) => {
+        if(data === "tense") {
+            setTenseOptions(!showTenseOptions);
+            setTypeOptions(false);
+        } else if(data === "type"){
+            setTypeOptions(!showTypeOptions);
+            setTenseOptions(false);
+        }
     }
 
     // This function uses the first button to receive the auxiliary and type in the variable of the first button connected with Gpt
     const sendGpt = () => {
-        setReset(true);
+        handleRest();
+        setLoading(false);
         setTypeGpt(typeInput);
         setTenseGpt(tenseInput)
         setTypeOptions(false);
-        setBlockButton(false)
+        setBlockButton(false);
+        setShowFilterMenu(!showFilterMenu);
     }
 
     // This function uses the second button to receive the english input in the variable of the first button connected with Gpt
@@ -74,6 +101,7 @@ const Form = (props) => {
         setShowCorrection(!showCorrection)
         setButtonGptAgain(englishInput)
         setBlockResetButton(true);
+        setEnglishLastVersion(englishInput);
         if (blockButton === false) {
             alert('Você precisa apertar o botão "Reiniciar" para nossa AI criar uma nova frase.')
         }
@@ -88,6 +116,7 @@ const Form = (props) => {
         setShowCorrection(false);
         setBlockResetButton(false);
         setEnglishInput('Clique aqui para traduzir')
+        setEnglishLastVersion('');
     }
 
     const ptGptSentence = useSelector(state => state.updateGptSentence.sentence)
@@ -96,92 +125,107 @@ const Form = (props) => {
 
         <>
             <Wall wall={Style.wall}>
-            <Frame frame={Style.frameText}>
+                <Frame frame={Style.frameText}>
                     <H1Text h1Text={props.title} h1Style={Style.h1Style}/>
                     <PText pText={props.subTitle} pStyle={Style.pStyle}/>
                 </Frame>
-                <Cards cardClass={Style.card}>
-                    <H2Text h2Text={props.titleCard} h2Style={Style.h2Style}/>
-                    <Frame frame={Style.frameCard}>
-                        <Frame>
-                            <Frame frame={Style.frameInput}>
-                                <input className={Style.input} placeholder={typeInput}></input>
-                                <Button buttonText="v" buttonStyle={Style.inputButton} buttonClick={() => setTypeOptions(!showTypeOptions)}/>
-                            </Frame>
-                            {showTypeOptions ?  ( 
-                            
-                                <>
-                                    <Frame frame={Style.inputFrame}>
-                                        <ul>
-                                            {sentenceTypeArray.sentenceType.map((type) => {
-                                                return(
-                                                    <>
-                                                        <li onClick={() => handleType(type.name)}>{type.name}</li>
-                                                    </>
-                                                )
-                                            })}
-                                        </ul>
+                <Frame frame={Style.frameTools}>
+                    <Cards cardClass={Style.card}>
+                        <Frame frame={Style.frameTitle}>
+                            {loading ? 
+                                (<>
+                                    <Frame style={{flexBasis: "100%"}}>
+                                        <PText style={{fontSize: "18px", fontStyle: "italic", fontWeight: "350"}} pText={mainText} />
                                     </Frame>
-
-                                </>
-                            
-                            ) : (
-                                <>
-
-                                </>
-                            )}
+                                </>) 
+                                :
+                                (<>
+                                    <GptSentence type={typeGpt}  tense={tenseGpt}/>
+                                </>)
+                            }
+                            <Button buttonClick={() => setShowFilterMenu(!showFilterMenu)} buttonText="☰" buttonStyle={Style.btnStyleFilter} buttonDiv={Style.filterButtonDiv}/>
                         </Frame>
-                        <Frame>
-                            <Frame frame={Style.frameInput}>
-                                <input className={Style.input} placeholder={tenseInput}/>
-                                <Button buttonText="v" buttonStyle={Style.inputButton} buttonClick={() => setTenseOptions(!showTenseOptions)}/>   
+                        {showFilterMenu ? 
+                            (<>
+                                <Frame style={{display: "flex"}}>
+                                    <Cards cardClass={Style.cardFilters}>
+                                        <Frame>
+                                            <Frame>
+                                                <p className={Style.itemP} onClick={() => handleSubFilters("tense")}>{tenseInput}</p>
+                                                {/** <Button buttonText="v" buttonStyle={Style.inputButton} buttonClick={() => setTenseOptions(!showTenseOptions)}/>    */}
+                                            </Frame>
+                                            {showTenseOptions ?  ( 
+                                                
+                                                <>
+                                                    <Cards cardClass={Style.cardSubFilters}>
+                                                        <ul>
+                                                            {sentenceTenseArray.sentenceTense.map((type) => {
+                                                                return(
+                                                                    <>
+                                                                        <li className={Style.itemLi} onClick={() => handleTense(type.name)}>{type.name}</li>
+                                                                    </>
+                                                                )
+                                                            })}
+                                                        </ul>
+                                                    </Cards>
+            
+                                                </>
+                                            
+                                            ) : (<></>)}
+                                        </Frame>
+                                        <Frame>
+                                            <Frame>
+                                                <p className={Style.itemP} onClick={() => handleSubFilters("type")}>{typeInput}</p>
+                                                {/** <Button buttonText="v" buttonStyle={Style.inputButton} buttonClick={() => setTenseOptions(!showTenseOptions)}/>    */}
+                                            </Frame>
+                                            {showTypeOptions ?  ( 
+                                                
+                                                <>
+                                                    <Cards cardClass={Style.cardSubFilters}>
+                                                        <ul>
+                                                            {sentenceTypeArray.sentenceType.map((type) => {
+                                                                return(
+                                                                    <>
+                                                                        <li className={Style.itemLi} onClick={() => handleType(type.name)}>{type.name}</li>
+                                                                    </>
+                                                                )
+                                                            })}
+                                                        </ul>
+                                                    </Cards>
+            
+                                                </>
+                                            
+                                            ) : (<></>)}
+                                        </Frame>
+                                        <Frame frame={Style.frameButton}>
+                                            <Button buttonClick={sendGpt} buttonText="Gerar" buttonStyle={Style.btnStyle}/>
+                                        </Frame>
+                                    </Cards>
+                                    
+                                </Frame>
+                            </>) 
+                            : 
+                            (<>
+                            </>)
+                        }
+                        {englishLastVersion === "" ? (<>
+                            <Frame frame={Style.outputGpt}>
+                                <p></p>
                             </Frame>
-                            {showTenseOptions ?  ( 
-                                
-                                <>
-                                    <Frame frame={Style.inputFrame}>
-                                        <ul>
-                                            {sentenceTenseArray.sentenceTense.map((type) => {
-                                                return(
-                                                    <>
-                                                        <li onClick={() => handleTense(type.name)}>{type.name}</li>
-                                                    </>
-                                                )
-                                            })}
-                                        </ul>
-                                    </Frame>
-
-                                </>
-                            
-                            ) : (
-                                <>
-    
-                                </>
-                            )}
+                        </>): (<>
+                        <Frame frame={Style.outputGpt}>
+                            <GptCorrection sentence={ptGptSentence} translation={englishLastVersion}/>
+                        </Frame></>)}
+                        <Frame frame={Style.frameItems}>
+                            <div className={Style.userInput}>
+                                <input className={Style.input} type="text" value={englishInput} onChange={() => setEnglishInput(event.target.value)} placeholder={englishInput}/>
+                            </div>
+                            <div className={Style.btnResult}>
+                                <Button buttonClick={sendGptAgain} buttonText="➤" buttonStyle={Style.btnStyleFilter}/>
+                            </div>
                         </Frame>
-                        <Frame frame={Style.frameButton}>
-                            {blockButton ? (<Button buttonClick={sendGpt} buttonText="Gerar" buttonStyle={Style.btnStyle}/>) : (<Button buttonClick={sendGpt} buttonText="Gerar" buttonStyle={Style.btnDisabled} disabled="disabled"/>)}
-                        </Frame>
-                    </Frame>
-                    {reset ? ( <Frame>
-                        <br />
-                        <Frame frame={Style.outputGpt}><GptSentence type={typeGpt}  tense={tenseGpt}/></Frame>
-                        <br />
-                        {showCorrection ? (<Frame frame={Style.outputGpt}><GptCorrection sentence={ptGptSentence} translation={englishInput}/></Frame>) : (<></>)}
-                    </Frame>
-                    ) : (<></>)}
-                    <Frame frame={Style.frameItems}>
-                        <div className={Style.userInput}>
-                            <input className={Style.input} type="text" value={englishInput} onChange={() => setEnglishInput(event.target.value)} placeholder={englishInput}/>
-                        </div>
-                        <div className={Style.btnResult}>
-                            <Button buttonClick={sendGptAgain} buttonText="Resultado" buttonStyle={Style.btnStyle}/>
-                        </div>
-                        <div>
-                            {blockResetButton ? (<Button buttonClick={handleRest} buttonText="Reiniciar" buttonStyle={Style.btnStyle}/>) : (<Button buttonClick={sendGpt} buttonText="Reiniciar" buttonStyle={Style.btnDisabled} disabled="disabled"/>)}
-                        </div>
-                    </Frame>
-                </Cards>
+                    </Cards>
+                </Frame>
             </Wall>
             <a href=""><PText pText="Website criado por Brian Moreira, professor de Inglês aos seus queridos alunos." pStyle={Style.footerText}/></a>
         </>
@@ -189,5 +233,179 @@ const Form = (props) => {
     )
 
 }
+
+{/**
+    
+{reset ? 
+
+{showTenseOptions ?  ( 
+                                                
+                                                <>
+                                                    <Frame frame={Style.inputFrame}>
+                                                        <ul>
+                                                            {sentenceTenseArray.sentenceTense.map((type) => {
+                                                                return(
+                                                                    <>
+                                                                        <li onClick={() => handleTense(type.name)}>{type.name}</li>
+                                                                    </>
+                                                                )
+                                                            })}
+                                                        </ul>
+                                                    </Frame>
+            
+                                                </>
+                                            
+                                            ) : (
+                                                <>
+                    
+                                                </>
+                                            )}
+                                            {showTenseOptions ?  ( 
+                                                
+                                                <>
+                                                    <Frame frame={Style.inputFrame}>
+                                                        <ul>
+                                                            {sentenceTenseArray.sentenceTense.map((type) => {
+                                                                return(
+                                                                    <>
+                                                                        <li onClick={() => handleTense(type.name)}>{type.name}</li>
+                                                                    </>
+                                                                )
+                                                            })}
+                                                        </ul>
+                                                    </Frame>
+            
+                                                </>
+                                            
+                                            ) : (
+                                                <>
+                    
+                                                </>
+                                            )}
+                            <Button buttonClick={sendGptAgain} buttonText="☰" buttonStyle={Style.btnStyleFilter} buttonDiv={Style.filterButtonDiv}/>
+
+
+                            {/*
+                            
+                            <div>
+                                {blockResetButton ? (<Button buttonClick={handleRest} buttonText="Reiniciar" buttonStyle={Style.btnStyle}/>) : (<Button buttonClick={sendGpt} buttonText="Reiniciar" buttonStyle={Style.btnDisabled} disabled="disabled"/>)}
+                            </div>
+<Frame frame={Style.frameCard}>
+
+                            {/* Bellow you find the type of sentence controler 
+
+                                <Frame>
+                                    <Frame frame={Style.frameInput}>
+                                        <input className={Style.input} placeholder={typeInput}></input>
+                                        <Button buttonText="v" buttonStyle={Style.inputButton} buttonClick={() => setTypeOptions(!showTypeOptions)}/>
+                                    </Frame>
+                                    {showTypeOptions ?  ( 
+                                    
+                                        <>
+                                            <Frame frame={Style.inputFrame}>
+                                                <ul>
+                                                    {sentenceTypeArray.sentenceType.map((type) => {
+                                                        return(
+                                                            <>
+                                                                <li onClick={() => handleType(type.name)}>{type.name}</li>
+                                                            </>
+                                                        )
+                                                    })}
+                                                </ul>
+                                            </Frame>
+
+                                        </>
+                                    
+                                    ) : (
+                                        <>
+
+                                        </>
+                                    )}
+                                </Frame>*/}
+
+                            {/* The end of the type sentence controler */}
+
+                            {/* Bellow you find the sentence tense controler 
+
+                                <Frame>
+                                    <Frame frame={Style.frameInput}>
+                                        <input className={Style.input} placeholder={tenseInput}/>
+                                        <Button buttonText="v" buttonStyle={Style.inputButton} buttonClick={() => setTenseOptions(!showTenseOptions)}/>   
+                                    </Frame>
+                                    {showTenseOptions ?  ( 
+                                        
+                                        <>
+                                            <Frame frame={Style.inputFrame}>
+                                                <ul>
+                                                    {sentenceTenseArray.sentenceTense.map((type) => {
+                                                        return(
+                                                            <>
+                                                                <li onClick={() => handleTense(type.name)}>{type.name}</li>
+                                                            </>
+                                                        )
+                                                    })}
+                                                </ul>
+                                            </Frame>
+
+                                        </>
+                                    
+                                    ) : (
+                                        <>
+            
+                                        </>
+                                    )}
+                                </Frame> */}
+
+                            {/* The end of the tense sentence controler */}
+
+                            {/* Bellow you find the generate button 
+
+                                <Frame frame={Style.frameButton}>
+                                    {blockButton ? (<Button buttonClick={sendGpt} buttonText="Gerar" buttonStyle={Style.btnStyle}/>) : (<Button buttonClick={sendGpt} buttonText="Gerar" buttonStyle={Style.btnDisabled} disabled="disabled"/>)}
+                                </Frame>*/}
+
+                            {/* The end of the generate button 
+
+                            </Frame>
+                            ( <Frame>
+                                <Frame frame={Style.outputGpt}><GptSentence type={typeGpt}  tense={tenseGpt}/></Frame>
+                                {showCorrection ? (<Frame frame={Style.outputGpt}><GptCorrection sentence={ptGptSentence} translation={englishInput}/></Frame>) : (<></>)}
+                                </Frame>
+                            ) : (<>
+                                
+                                </>)}
+                                {reset ? 
+                                    ( <Frame>
+                                        <Frame frame={Style.frameInput}>
+                                            <input className={Style.input} placeholder={tenseInput}/>
+                                            <Button buttonText="v" buttonStyle={Style.inputButton} buttonClick={() => setTenseOptions(!showTenseOptions)}/>   
+                                        </Frame>
+                                        {showTenseOptions ?  ( 
+                                            
+                                            <>
+                                                <Frame frame={Style.inputFrame}>
+                                                    <ul>
+                                                        {sentenceTenseArray.sentenceTense.map((type) => {
+                                                            return(
+                                                                <>
+                                                                    <li onClick={() => handleTense(type.name)}>{type.name}</li>
+                                                                </>
+                                                            )
+                                                        })}
+                                                    </ul>
+                                                </Frame>
+        
+                                            </>
+                                        
+                                        ) : (
+                                            <>
+                
+                                            </>
+                                        )}
+                                    </Frame>
+                                    ) : (<></>)
+                                }    
+    
+*/}
 
 export default Form;

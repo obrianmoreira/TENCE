@@ -6,9 +6,11 @@ export const Button = (props) => {
 
         <>
 
-            <button id={props.buttonStyle} className={Style.buttonStyle} src={props.buttonSrc} onClick={props.buttonClick} disabled={props.disabled}>
-                {props.buttonText}
-            </button>
+            <div id={props.buttonDiv}>
+                <button id={props.buttonStyle} className={Style.buttonStyle} src={props.buttonSrc} onClick={props.buttonClick} disabled={props.disabled}>
+                    {props.buttonText}
+                </button>
+            </div>
         
         </>
 

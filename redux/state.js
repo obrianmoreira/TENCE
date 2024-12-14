@@ -2,10 +2,10 @@ const sentenceTypeArray = {
 
     sentenceType: [
 
-        {name: 'Affirmative'},
-        {name: 'Interrogative'},
-        {name: 'Negative'},
-        {name: 'Interrogative-nagative'}
+        {name: 'Afirmativa'},
+        {name: 'Interrogativa'},
+        {name: 'Negativa'},
+        {name: 'Interrogativa-Negativa'}
     ],
 
 }
@@ -14,9 +14,9 @@ export const sentenceTenseArray = {
 
     sentenceTense: [
 
-        {name: 'Present Tense'},
-        {name: 'Future Tense'},
-        {name: 'Past Tense'},
+        {name: 'Presente'},
+        {name: 'Futuro'},
+        {name: 'Passado'},
     ],
 
 }
@@ -31,6 +31,10 @@ export const correctionGpt = {
 
     correction: '',
 
+}
+
+export const initialTextStates = {
+    initialTextStates: [''],
 }
 
 

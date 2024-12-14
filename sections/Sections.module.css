@@ -5,11 +5,16 @@
     background-image: url('image/background.png');
     background-size: 2400px;
     color: white;
-    
 }
 
 #frameText {
     flex-basis: 100%;
+}
+
+#frameTools{
+    display: flex;
+    gap: 20px;
+    flex-basis: 70%;
 }
 
 #footerText {
@@ -44,15 +49,29 @@
     border-radius: 0px;
 }
 
-#frameInput {
-    display: flex;
-    gap: 0px;
+#card{
+    background-color: #fff;
+    width: 100%;
+    position: relative;
 }
 
-#card{
-    margin-top: 30px;
-    width: 100%;
-    flex-basis: 80%;
+#cardFilters{
+    position: absolute;
+    text-align: right;
+    width: fit-content;
+    top: 17%;
+    right: 6%;
+    padding: 10px;
+}
+
+
+#cardSubFilters{
+    position: absolute;
+    text-align: right;
+    width: fit-content;
+    top: 30%;
+    right: 110%;
+    padding: 10px;
 }
 
 #frameCard {
@@ -61,11 +80,34 @@
 }
 
 #frameItems {
-
-    display: flex;
+    background-color: aliceblue;
     gap: 20px;
     margin-top: 30px;
+    padding: 10px;
+    border-radius: 10px;
+}
 
+#frameTitle {
+    display: flex;
+    padding-left: 15px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    gap: 20px;
+}
+
+#sentenceGeneratedDiv{
+    flex-basis: 100%;
+}
+
+#filterButtonDiv{
+    flex-basis: 0%;
+}
+
+#btnStyleFilter{
+    margin: 0px;
+    padding: 0px 10px 4px 10px;
+    font-size: 20px;
 }
 
 .userInput{
@@ -75,12 +117,13 @@
 }
 
 #h1Style {
-    font-size: 60px;
+    font-size: 50px;
+    margin-top: -20px;
 }
 
 #h2Style {
     font-size: 20.5px;
-    margin-bottom: 20px;
+    font-style: italic;
 }
 
 #pStyle {
@@ -88,6 +131,24 @@
     font-size: 16px;
 
 }
+
+.itemP{
+    padding: 5px;
+}
+
+.itemLi{
+    font-size: 15px;
+    padding: 2px;
+}
+
+:hover.itemP{
+    background-color: aliceblue;
+}
+
+:hover.itemLi{
+    background-color: aliceblue;
+}
+
 
 .input {
     border-radius: 5px;
@@ -98,9 +159,9 @@
 
 #outputGpt{
     border-radius: 5px;
-    background-color: aliceblue;
+    background-color: #fff;
     height: fit-content;
-    padding: 20px 20px 10px 20px;
+    padding: 0px 0px 0px 0px;
 }
 
 #btnDisabled {
@@ -108,6 +169,10 @@
     background-color: rgb(182, 181, 179);
     color: rgb(222, 222, 222);
 
+}
+
+.btnResult{
+    text-align: right;
 }
 
 @media only screen and (min-width: 320px) and (max-width: 576px) {
@@ -153,9 +218,8 @@
 
     #outputGpt{
         border-radius: 5px;
-        background-color: aliceblue;
         height: fit-content;
-        padding: 10px 20px 0px 20px;
+        padding: 0px 20px 0px 20px;
     }
     
     #card{
@@ -195,6 +259,16 @@
 
     .btnResult{
         margin-bottom: 20px;
+    }
+    
+
+    #cardFilters{
+        position: absolute;
+        text-align: right;
+        width: fit-content;
+        top: 12%;
+        right: 8%;
+        padding: 10px;
     }
     
 

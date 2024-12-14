@@ -17,13 +17,13 @@ export const Wall = ({children, wall}) => {
 
 }
 
-export const Frame = ({children, frame}) => {
+export const Frame = ({children, frame, style}) => {
 
     return (
 
         <>
         
-            <div id={frame} className={Style.frame}>
+            <div id={frame} className={Style.frame} style={style}>
                 {children}
             </div>
 
