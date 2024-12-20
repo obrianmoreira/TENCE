@@ -7,7 +7,7 @@ import Style from '../sections/Sections.module.css';
 import GptSentence from "@/components/Content/gptsentence";
 import { Button } from "@/components/Items/Button/button";
 import { useSelector } from "react-redux";
-import sentenceTypeArray from "@/redux/state";
+import sentenceTypeArray, { sentenceLevelArray } from "@/redux/state";
 import { sentenceTenseArray } from "@/redux/state";
 import { GptCorrection } from "@/components/Content/gptsentence";
 
@@ -22,6 +22,7 @@ const Form = (props) => {
     // Type of the sentence input where the person click to open the options and retrieve the type of sentence data
     const [typeInput, setTypeInput] = useState('Tipo de Frase');
     const [tenseInput, setTenseInput] = useState('Tempo Verbal');
+    const [levelInput, setLevelInput] = useState('Dificuldade');
 
     // English input to checked where the person click to write the sentence in English to be compared to Portuguese
     const [englishInput, setEnglishInput] = useState('Clique aqui para traduzir');
@@ -32,11 +33,12 @@ const Form = (props) => {
     // Show the options of sentence types, it works with the ternary operator
     const [showTypeOptions, setTypeOptions] = useState(false);
     const [showTenseOptions, setTenseOptions] = useState(false);
-
+    const [showLevelOptions, setLevelOptions] = useState(false);
 
     // This is the first button. It gets the data from auxiliary and type to update buttonGpt variable
     const [typeGpt, setTypeGpt] = useState('');
     const [tenseGpt, setTenseGpt] = useState('');
+    const [levelGpt, setLevelGpt] = useState('');
 
     // This is the second button. It gets the data from user English version to update buttonGptAgain variable
     const [buttonGptAgain, setButtonGptAgain] = useState('');
@@ -66,6 +68,7 @@ const Form = (props) => {
     const handleType = (typeInput) => {
         setTypeInput(typeInput)
         setTypeOptions(!showTypeOptions)
+        setMainText("loading...")
     }
 
     const handleTense = (tenseInput) => {
@@ -75,13 +78,26 @@ const Form = (props) => {
         setMainText("loading...")
     }
 
+    const handleLevel = (levelInput) => {
+        setLevelInput(levelInput)
+        setLevelOptions(!showLevelOptions)
+        setLoading(true);
+        setMainText("loading...")
+    }
+
     const handleSubFilters = (data) => {
         if(data === "tense") {
             setTenseOptions(!showTenseOptions);
             setTypeOptions(false);
+            setLevelOptions(false);
         } else if(data === "type"){
             setTypeOptions(!showTypeOptions);
             setTenseOptions(false);
+            setLevelOptions(false);
+        } else if(data === "level"){
+            setLevelOptions(!showLevelOptions);
+            setTenseOptions(false);
+            setTypeOptions(false);
         }
     }
 
@@ -90,7 +106,8 @@ const Form = (props) => {
         handleRest();
         setLoading(false);
         setTypeGpt(typeInput);
-        setTenseGpt(tenseInput)
+        setTenseGpt(tenseInput);
+        setLevelGpt(levelInput);
         setTypeOptions(false);
         setBlockButton(false);
         setShowFilterMenu(!showFilterMenu);
@@ -137,7 +154,7 @@ const Form = (props) => {
                                 </>) 
                                 :
                                 (<>
-                                    <GptSentence type={typeGpt}  tense={tenseGpt}/>
+                                    <GptSentence type={typeGpt} tense={tenseGpt} level={levelGpt}/>
                                 </>)
                             }
                             <Button buttonClick={() => setShowFilterMenu(!showFilterMenu)} buttonText="☰" buttonStyle={Style.btnStyleFilter} buttonDiv={Style.filterButtonDiv}/>
@@ -194,6 +211,30 @@ const Form = (props) => {
                                             
                                             ) : (<></>)}
                                         </Frame>
+                                        <Frame>
+                                            <Frame>
+                                                <p className={Style.itemP} onClick={() => handleSubFilters("level")}>{levelInput}</p>
+                                                {/** <Button buttonText="v" buttonStyle={Style.inputButton} buttonClick={() => setTenseOptions(!showTenseOptions)}/>    */}
+                                            </Frame>
+                                            {showLevelOptions ?  ( 
+                                                
+                                                <>
+                                                    <Cards cardClass={Style.cardSubFilters}>
+                                                        <ul>
+                                                            {sentenceLevelArray.sentenceLevel.map((level) => {
+                                                                return(
+                                                                    <>
+                                                                        <li className={Style.itemLi} onClick={() => handleLevel(level.name)}>{level.name}</li>
+                                                                    </>
+                                                                )
+                                                            })}
+                                                        </ul>
+                                                    </Cards>
+            
+                                                </>
+                                            
+                                            ) : (<></>)}
+                                        </Frame>
                                         <Frame frame={Style.frameButton}>
                                             <Button buttonClick={sendGpt} buttonText="Gerar" buttonStyle={Style.btnStyle}/>
                                         </Frame>
@@ -211,7 +252,7 @@ const Form = (props) => {
                             </Frame>
                         </>): (<>
                         <Frame frame={Style.outputGpt}>
-                            <GptCorrection sentence={ptGptSentence} translation={englishLastVersion}/>
+                            <GptCorrection sentence={ptGptSentence} translation={englishLastVersion} level={levelInput}/>
                         </Frame></>)}
                         <Frame frame={Style.frameItems}>
                             <div className={Style.userInput}>

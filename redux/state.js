@@ -21,6 +21,15 @@ export const sentenceTenseArray = {
 
 }
 
+export const sentenceLevelArray = {
+    sentenceLevel : [
+        {name: 'Básico'},
+        {name: 'Médio'},
+        {name: 'Difícil'},
+        {name: 'Fluente'},
+    ]
+}
+
 export const sentenceGpt = {
 
     sentence: '',

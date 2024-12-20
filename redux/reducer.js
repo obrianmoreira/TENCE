@@ -1,4 +1,4 @@
-import sentenceTypeArray, { correctionGpt } from "./state"; 
+import sentenceTypeArray, { correctionGpt, sentenceLevelArray } from "./state"; 
 import { sentenceTenseArray } from "./state";
 import { sentenceGpt } from "./state";
 
@@ -28,6 +28,7 @@ export const updateGptSentence = (state = sentenceGpt, action) => {
     }
 }
 
+
 export const updateGptCorrection = (state = correctionGpt, action) => {
     switch(action.type) {
         case 'UPDATE_GPT_CORRECTION':
@@ -53,5 +54,17 @@ export const reducerSentenceTense = (state = sentenceTenseArray, action) => {
     };
 
 };
+
+export const reducerSentenceLevel = (state = sentenceLevelArray, action) => {
+    switch(action.type) {
+        case 'UPDATE_SENTENCE_LEVEL':
+            return {
+                ...state,
+                name: action.payload,
+            };
+        default:
+            return state;
+    }
+}
 
 export default reducer;

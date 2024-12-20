@@ -20,6 +20,12 @@ const selectSentenceTense = (sentenceTense) => {
 
 };
 
+const selectSentenceLevel = (sentenceLevel) => {
+    return {
+        type: 'UPDATE_SENTENCE_LEVEL',
+        payload: sentenceLevel,
+    };
+}
 
 export const generatedGptSentence = (gptSentence) => {
 
